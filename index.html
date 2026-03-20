@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ember & Oak — Karen, Nairobi</title>
+<link href="https://fonts.googleapis.com/css2?family=Rufina:wght@400;700&family=Mulish:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --char:#0d0907;--smoke:#1c1310;--ember:#7a2e0e;--fire:#c24a1a;
+  --wood:#3d2214;--oak:#5c3520;--bone:#f5ede0;--cream:#faf4ec;
+  --gold:#b8891a;--dim:rgba(245,237,224,.45);--mid:rgba(245,237,224,.65);
+  --serif:'Rufina',Georgia,serif;--sans:'Mulish',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--char);color:var(--bone);font-family:var(--sans);font-weight:300;line-height:1.75;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 4rem;transition:all .3s}
+nav.solid{background:rgba(13,9,7,.97);backdrop-filter:blur(10px);border-bottom:1px solid rgba(184,137,26,.12)}
+.logo{font-family:var(--serif);font-size:1.3rem;color:var(--bone);text-decoration:none;letter-spacing:.08em}
+.logo span{color:var(--fire)}
+.nav-links{display:flex;align-items:center;gap:2.5rem}
+.nav-links a{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--bone)}
+.nav-res{background:var(--fire);color:white!important;padding:.6rem 1.5rem;transition:background .2s!important}
+.nav-res:hover{background:#d45620!important}
+
+/* HERO — smoke & fire */
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=1800') center/cover}
+.hero-burn{position:absolute;inset:0;background:linear-gradient(105deg,rgba(13,9,7,.97) 0%,rgba(13,9,7,.85) 45%,rgba(13,9,7,.35) 100%)}
+.hero-inner{position:relative;z-index:1;padding:0 4rem;max-width:60rem}
+.hero-kicker{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--fire);margin-bottom:2rem;display:flex;align-items:center;gap:1rem}
+.hero-kicker::before{content:'';width:2.5rem;height:1px;background:var(--fire)}
+.hero-h1{font-family:var(--serif);font-size:clamp(4rem,7vw,7rem);font-weight:700;line-height:.95;color:var(--bone);letter-spacing:-.02em;margin-bottom:2rem}
+.hero-h1 em{color:var(--fire);font-style:italic;display:block}
+.hero-desc{font-size:1rem;color:var(--mid);line-height:1.9;max-width:30rem;margin-bottom:3rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-fire{background:var(--fire);color:white;padding:1rem 2.5rem;font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;font-family:var(--sans);transition:all .25s;display:inline-flex;align-items:center;gap:.6rem}
+.btn-fire:hover{background:#d45620;transform:translateY(-2px)}
+.btn-ghost{border:1px solid rgba(245,237,224,.2);color:var(--bone);padding:1rem 2rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.6rem}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-aside{position:absolute;right:4rem;top:50%;transform:translateY(-50%);z-index:1;display:flex;flex-direction:column;gap:2rem;text-align:right}
+.hero-fact{display:flex;flex-direction:column;gap:.25rem}
+.hero-fact-n{font-family:var(--serif);font-size:2.5rem;font-weight:700;color:var(--fire);line-height:1}
+.hero-fact-l{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+
+/* INTRO STRIP */
+.intro{background:var(--wood);padding:3.5rem 4rem;display:flex;align-items:center;justify-content:space-between;gap:3rem;border-top:2px solid var(--fire);border-bottom:2px solid var(--fire)}
+.intro-item{display:flex;align-items:center;gap:1.25rem}
+.intro-icon{font-size:1.6rem}
+.intro-text h4{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--bone);margin-bottom:.15rem}
+.intro-text p{font-size:.78rem;color:var(--dim)}
+.intro-div{width:1px;height:3rem;background:rgba(245,237,224,.12)}
+
+/* STORY */
+.story{padding:8rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center;background:var(--smoke)}
+.story-label{font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--fire);margin-bottom:1.5rem}
+.story h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--bone);line-height:1.05;margin-bottom:2rem;letter-spacing:-.02em}
+.story h2 em{color:var(--gold);font-style:italic}
+.story p{font-size:.92rem;color:var(--mid);line-height:2;margin-bottom:1.5rem}
+.story-img{position:relative;height:580px}
+.story-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.85)}
+.story-tag{position:absolute;top:2rem;left:-2rem;background:var(--fire);padding:1.75rem 2rem;writing-mode:vertical-rl;font-family:var(--serif);font-size:.85rem;font-weight:700;color:white;letter-spacing:.15em;text-transform:uppercase}
+
+/* MENU */
+.menu-sec{padding:8rem 4rem;background:var(--char)}
+.menu-head{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:end;margin-bottom:5rem}
+.menu-head h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,4rem);font-weight:700;color:var(--bone);letter-spacing:-.02em;line-height:1}
+.menu-head h2 em{color:var(--fire);font-style:italic;display:block}
+.menu-head p{font-size:.88rem;color:var(--dim);line-height:1.95}
+.menu-head a{display:inline-block;margin-top:1.5rem;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(184,137,26,.4);padding-bottom:.15rem}
+.menu-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(245,237,224,.04)}
+.menu-cat{background:var(--char);padding:0}
+.cat-head{padding:1.5rem 2rem;background:var(--wood);display:flex;align-items:center;gap:.75rem}
+.cat-icon{font-size:1.1rem}
+.cat-name{font-family:var(--serif);font-size:.95rem;font-weight:700;color:var(--bone);letter-spacing:.04em}
+.cat-items{display:flex;flex-direction:column}
+.cat-item{padding:1.5rem 2rem;border-bottom:1px solid rgba(245,237,224,.05);display:flex;justify-content:space-between;align-items:start;gap:1.5rem;transition:background .2s}
+.cat-item:last-child{border-bottom:none}
+.cat-item:hover{background:rgba(194,74,26,.06)}
+.cat-item-info h4{font-family:var(--serif);font-size:.98rem;font-weight:700;color:var(--bone);margin-bottom:.2rem}
+.cat-item-info p{font-size:.75rem;color:var(--dim);line-height:1.7}
+.cat-item-info .sub{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fire);margin-top:.35rem;display:block}
+.cat-price{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--gold);white-space:nowrap;padding-top:.15rem}
+
+/* FIRE IMAGE */
+.fire-img{height:60vh;min-height:480px;position:relative;overflow:hidden}
+.fire-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
+.fire-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,9,7,.7) 0%,transparent 60%)}
+.fire-text{position:absolute;left:4rem;bottom:4rem;z-index:1}
+.fire-text blockquote{font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,2.2rem);font-style:italic;color:var(--bone);line-height:1.4;max-width:36rem;margin-bottom:1rem}
+.fire-text cite{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fire);font-style:normal}
+
+/* SPECIALS */
+.specials{padding:8rem 4rem;background:var(--smoke);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.specials-copy{}
+.specials-copy h2{font-family:var(--serif);font-size:clamp(2rem,3vw,3rem);font-weight:700;color:var(--bone);line-height:1.1;margin-bottom:1.5rem;letter-spacing:-.02em}
+.specials-copy h2 em{color:var(--gold);font-style:italic}
+.specials-copy p{font-size:.9rem;color:var(--mid);line-height:2;margin-bottom:2rem}
+.special-cards{display:flex;flex-direction:column;gap:1rem}
+.special-card{display:grid;grid-template-columns:5rem 1fr;gap:1.5rem;padding:1.75rem;background:rgba(255,255,255,.03);border:1px solid rgba(245,237,224,.06);transition:border-color .2s;cursor:default}
+.special-card:hover{border-color:rgba(194,74,26,.35)}
+.special-day{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--fire);line-height:1;align-self:center;text-align:center}
+.special-info h4{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--bone);margin-bottom:.3rem}
+.special-info p{font-size:.8rem;color:var(--dim);line-height:1.75}
+.special-price{font-size:.78rem;color:var(--gold);margin-top:.4rem;letter-spacing:.06em}
+
+/* BOOK */
+.book-sec{padding:8rem 4rem;background:var(--char);display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}
+.book-copy h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);font-weight:700;color:var(--bone);line-height:1.05;margin-bottom:1.5rem;letter-spacing:-.02em}
+.book-copy h2 em{color:var(--fire);font-style:italic;display:block}
+.book-copy p{font-size:.9rem;color:var(--mid);line-height:2;margin-bottom:1.5rem}
+.book-info{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+.book-info-row{display:flex;align-items:flex-start;gap:1rem;font-size:.85rem;color:var(--mid);padding-bottom:1rem;border-bottom:1px solid rgba(245,237,224,.06)}
+.book-info-row:last-child{border-bottom:none}
+.book-info-row span:first-child{font-size:1rem;width:1.75rem;flex-shrink:0}
+.book-form{background:rgba(255,255,255,.03);border:1px solid rgba(184,137,26,.15);padding:3rem}
+.book-form h3{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--bone);margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(245,237,224,.07)}
+.ff{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.5rem}
+.ff label{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.ff input,.ff select,.ff textarea{background:rgba(255,255,255,.04);border:1px solid rgba(184,137,26,.15);padding:.85rem 1rem;font-size:.88rem;font-family:var(--sans);font-weight:300;color:var(--bone);outline:none;transition:border-color .2s}
+.ff input:focus,.ff select:focus,.ff textarea:focus{border-color:var(--gold)}
+.ff input::placeholder{color:var(--dim)}
+.ff select option{background:var(--smoke)}
+.ff textarea{resize:none;min-height:70px;line-height:1.7}
+.ff-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.book-submit{width:100%;background:var(--fire);color:white;border:none;padding:1.1rem;font-size:.78rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background .25s;margin-top:.5rem}
+.book-submit:hover{background:#d45620}
+
+/* FOOTER */
+footer{background:var(--smoke);padding:5rem 4rem 3rem;border-top:1px solid rgba(184,137,26,.12)}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;padding-bottom:4rem;border-bottom:1px solid rgba(245,237,224,.06);margin-bottom:3rem}
+.ft-brand{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--bone);margin-bottom:.5rem}
+.ft-brand span{color:var(--fire)}
+.ft-sub{font-size:.82rem;color:var(--dim);line-height:1.85;max-width:22rem;margin-bottom:1.5rem}
+.ft-hours{font-size:.78rem;color:var(--mid);line-height:1.95}
+.ft-hours strong{color:var(--gold);font-weight:500}
+.ft-col h4{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--fire);margin-bottom:1.25rem;font-weight:400}
+.ft-col a{display:block;font-size:.82rem;color:var(--dim);text-decoration:none;margin-bottom:.65rem;transition:color .2s}
+.ft-col a:hover{color:var(--gold)}
+.ft-bot{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:rgba(245,237,224,.2)}
+.ft-wa{background:var(--fire);color:white;padding:.5rem 1.25rem;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:background .2s}
+.ft-wa:hover{background:#d45620}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="logo">Ember <span>&</span> Oak</a>
+  <div class="nav-links">
+    <a href="#story">Our Story</a>
+    <a href="#menu-sec">Menu</a>
+    <a href="#specials">Specials</a>
+    <a href="#book-sec" class="nav-res">Book a Table</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-burn"></div>
+  <div class="hero-inner">
+    <div class="hero-kicker">Karen · Nairobi · Since 2018</div>
+    <h1 class="hero-h1">Fire. Smoke.<br><em>Perfection.</em></h1>
+    <p class="hero-desc">Premium grill and steakhouse in the heart of Karen. We dry-age our own beef, smoke over native hardwoods, and take every cut seriously. This is what meat is supposed to taste like.</p>
+    <div class="hero-btns">
+      <a href="#book-sec" class="btn-fire">Reserve a Table →</a>
+      <a href="#menu-sec" class="btn-ghost">View the Menu</a>
+    </div>
+  </div>
+  <div class="hero-aside">
+    <div class="hero-fact"><div class="hero-fact-n">28</div><div class="hero-fact-l">Days<br>Dry Aged</div></div>
+    <div class="hero-fact"><div class="hero-fact-n">900°</div><div class="hero-fact-l">Grill<br>Temperature</div></div>
+    <div class="hero-fact"><div class="hero-fact-n">6</div><div class="hero-fact-l">Native<br>Hardwoods</div></div>
+  </div>
+</section>
+
+<div class="intro">
+  <div class="intro-item"><div class="intro-icon">🥩</div><div class="intro-text"><h4>Dry-Aged In House</h4><p>28-day minimum on all prime cuts</p></div></div>
+  <div class="intro-div"></div>
+  <div class="intro-item"><div class="intro-icon">🔥</div><div class="intro-text"><h4>Hardwood Fire Grill</h4><p>Olive, acacia & marula wood smoke</p></div></div>
+  <div class="intro-div"></div>
+  <div class="intro-item"><div class="intro-icon">🌿</div><div class="intro-text"><h4>Farm to Ember</h4><p>Kenyan beef, local produce</p></div></div>
+  <div class="intro-div"></div>
+  <div class="intro-item"><div class="intro-icon">🍷</div><div class="intro-text"><h4>Sommelier-Curated</h4><p>South African & European cellar</p></div></div>
+</div>
+
+<section class="story" id="story">
+  <div>
+    <div class="story-label">Our Philosophy</div>
+    <h2>Obsessed with <em>The Craft</em></h2>
+    <p>Ember & Oak was born from a simple conviction: Nairobi had world-class beef and world-class wood, but nowhere treating them with the respect they deserved. We changed that in 2018 when we opened in a converted colonial warehouse in Karen.</p>
+    <p>Every cut is sourced from a small number of farms in the Rift Valley and the Mount Kenya region. Every cow we serve, we can name the farm. Every steak is dry-aged in-house in our custom salt chamber. We use six native hardwoods — olive, acacia, marula, leleshwa, cedar, and muhuhu — each bringing its own character to the fire.</p>
+    <a href="#menu-sec" class="btn-fire" style="display:inline-flex;margin-top:1rem">Explore the Menu →</a>
+  </div>
+  <div class="story-img">
+    <img src="https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Ember & Oak Kitchen">
+    <div class="story-tag">Est.<br>2018</div>
+  </div>
+</section>
+
+<section class="menu-sec" id="menu-sec">
+  <div class="menu-head">
+    <div>
+      <h2>The Fire<br><em>Menu</em></h2>
+    </div>
+    <div>
+      <p>Everything that leaves our kitchen has passed through fire. We don't do half-measures — every dish is built around smoke, heat, and technique refined over seven years in this kitchen.</p>
+      <a href="#">Full menu PDF →</a>
+    </div>
+  </div>
+  <div class="menu-cats">
+    <div class="menu-cat">
+      <div class="cat-head"><span class="cat-icon">🔥</span><span class="cat-name">From the Grill</span></div>
+      <div class="cat-items">
+        <div class="cat-item"><div class="cat-item-info"><h4>Tomahawk Ribeye</h4><p>1.2kg on the bone, 28-day dry-aged Rift Valley beef</p><span class="sub">For 2 · Serves with chimichurri & bone marrow butter</span></div><div class="cat-price">Ksh 9,800</div></div>
+        <div class="cat-item"><div class="cat-item-info"><h4>Picanha</h4><p>Top sirloin cap, acacia smoke, sea salt crust</p><span class="sub">250g · Grass-fed · Karen Farm</span></div><div class="cat-price">Ksh 4,200</div></div>
+        <div class="cat-item"><div class="cat-item-info"><h4>Fillet Medallion</h4><p>Centre-cut tenderloin, truffle butter, crispy shallots</p><span class="sub">200g · 28-day aged</span></div><div class="cat-price">Ksh 5,400</div></div>
+        <div class="cat-item"><div class="cat-item-info"><h4>Whole Spatchcock Chicken</h4><p>Marula-smoked, lemon herb brine, 12-hour preparation</p></div><div class="cat-price">Ksh 3,200</div></div>
+      </div>
+    </div>
+    <div class="menu-cat">
+      <div class="cat-head"><span class="cat-icon">🥗</span><span class="cat-name">To Start & Share</span></div>
+      <div class="cat-items">
+        <div class="cat-item"><div class="cat-item-info"><h4>Bone Marrow Canoe</h4><p>Roasted femur, chimichurri, toasted sourdough</p></div><div class="cat-price">Ksh 1,800</div></div>
+        <div class="cat-item"><div class="cat-item-info"><h4>Beef Tartare</h4><p>Hand-cut fillet, caper, shallot, quail egg, Dijon</p></div><div class="cat-price">Ksh 2,200</div></div>
+        <div class="cat-item"><div class="cat-item-info"><h4>Smoked Brisket Croquettes</h4><p>12-hour smoke, chipotle aioli, pickled jalapeño</p></div><div class="cat-price">Ksh 1,600</div></div>
+        <div class="cat-item"><div class="cat-item-info"><h4>Ember-Roasted Beets</h4><p>Whipped feta, candied walnut, aged balsamic · Vegetarian</p></div><div class="cat-price">Ksh 1,200</div></div>
+      </div>
+    </div>
+    <div class="menu-cat">
+      <div class="cat-head"><span class="cat-icon">🍷</span><span class="cat-name">From the Cellar</span></div>
+      <div class="cat-items">
+        <div class="cat-item"><div class="cat-item-info"><h4>Kanonkop Kadette</h4><p>Pinotage blend · Stellenbosch 2021</p><span class="sub">Pairs with: Tomahawk, Picanha</span></div><div class="cat-price">Ksh 5,800</div></div>
+        <div class="cat-item"><div class="cat-item-info"><h4>Warwick Three Cape Ladies</h4><p>Red Bordeaux blend · Cape 2020</p><span class="sub">Pairs with: Fillet, Ribeye</span></div><div class="cat-price">Ksh 7,200</div></div>
+        <div class="cat-item"><div class="cat-item-info"><h4>Klein Constantia Sauvignon</h4><p>Coastal 2022 · Crisp, mineral</p><span class="sub">Pairs with: Seafood, Starters</span></div><div class="cat-price">Ksh 4,400</div></div>
+        <div class="cat-item"><div class="cat-item-info"><h4>Sommelier's Selection</h4><p>Ask our sommelier for tonight's recommendation</p></div><div class="cat-price">Varies</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="fire-img">
+  <img src="https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Fire grill">
+  <div class="fire-overlay"></div>
+  <div class="fire-text">
+    <blockquote>"There is nothing more honest than a great piece of meat and a proper fire. Everything else is theatre."</blockquote>
+    <cite>— Chef Kamau Waweru, Executive Chef</cite>
+  </div>
+</div>
+
+<section class="specials" id="specials">
+  <div class="specials-copy">
+    <h2>The Weekly <em>Fire Calendar</em></h2>
+    <p>Every week at Ember & Oak has a rhythm. Come on a Tuesday for the best value in Karen. Come on a Sunday when we slow-smoke through the morning and the whole restaurant smells like heaven by noon.</p>
+    <a href="#book-sec" class="btn-fire" style="display:inline-flex;margin-top:.5rem">Book a Special Night →</a>
+  </div>
+  <div class="special-cards">
+    <div class="special-card"><div class="special-day">T</div><div class="special-info"><h4>Tuesday Butcher's Cut</h4><p>Chef's selected off-menu cuts at reduced price. What's available depends on the week.</p><span class="special-price">From Ksh 2,400 · Tue from 6PM</span></div></div>
+    <div class="special-card"><div class="special-day">F</div><div class="special-info"><h4>Friday Date Night Set Menu</h4><p>4-course set menu for two with half-bottle of South African red. Fire & romance.</p><span class="special-price">Ksh 12,000 for two · Fri from 7PM</span></div></div>
+    <div class="special-card"><div class="special-day">Sa</div><div class="special-info"><h4>Saturday Long Lunch</h4><p>All-day grill from 12PM. Slow-smoked brisket, bone-in short rib, and the best chips in Karen.</p><span class="special-price">À la carte · Sat 12PM–4PM</span></div></div>
+    <div class="special-card"><div class="special-day">Su</div><div class="special-info"><h4>Sunday Smoke</h4><p>12-hour overnight brisket, Sunday roast, Bloody Marys, and the garden open for families.</p><span class="special-price">Ksh 3,800 pp · Sun from 12PM</span></div></div>
+  </div>
+</section>
+
+<section class="book-sec" id="book-sec">
+  <div class="book-copy">
+    <h2>Come Sit<br><em>By the Fire</em></h2>
+    <p>We take bookings for lunch and dinner, seven days a week. Walk-ins welcome when space allows — but Karen fills up on Friday and Saturday. Don't risk it.</p>
+    <p>For private dining, corporate events, or our Chef's Table experience, contact us directly for a custom package.</p>
+    <div class="book-info">
+      <div class="book-info-row"><span>💬</span><span>WhatsApp: +254 700 000 000 — fastest response</span></div>
+      <div class="book-info-row"><span>📞</span><span>+254 700 000 000 · Tue–Sun 11AM–10PM</span></div>
+      <div class="book-info-row"><span>📍</span><span>Karen Road, off Ngong Road · Free parking for 80 cars</span></div>
+      <div class="book-info-row"><span>🕐</span><span>Lunch: 12–3PM · Dinner: 6–10:30PM · Sun from 12PM</span></div>
+    </div>
+  </div>
+  <div class="book-form">
+    <h3>Reserve a Table</h3>
+    <div class="ff-row">
+      <div class="ff"><label>Name</label><input type="text" id="fName" placeholder="Full name"></div>
+      <div class="ff"><label>Phone / WhatsApp</label><input type="tel" id="fPhone" placeholder="+254 7XX XXX XXX"></div>
+    </div>
+    <div class="ff-row">
+      <div class="ff"><label>Date</label><input type="date"></div>
+      <div class="ff"><label>Time</label>
+        <select>
+          <option>Lunch 12PM</option><option>Lunch 1PM</option><option>Lunch 2PM</option>
+          <option>Dinner 6PM</option><option>Dinner 7PM</option><option>Dinner 8PM</option><option>Dinner 9PM</option>
+        </select>
+      </div>
+    </div>
+    <div class="ff-row">
+      <div class="ff"><label>Guests</label>
+        <select><option>2</option><option>3–4</option><option>5–6</option><option>7–10</option><option>10+</option></select>
+      </div>
+      <div class="ff"><label>Occasion</label>
+        <select><option>Dinner / Lunch</option><option>Birthday</option><option>Anniversary</option><option>Business</option><option>Chef's Table</option></select>
+      </div>
+    </div>
+    <div class="ff"><label>Dietary requirements or special requests</label><textarea placeholder="Allergies, celebrations, preferred seating..."></textarea></div>
+    <button class="book-submit" id="fBtn" onclick="submitEnq()">Request Reservation →</button>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div>
+      <div class="ft-brand">Ember <span>&</span> Oak</div>
+      <p class="ft-sub">Premium steakhouse and grill in Karen, Nairobi. Dry-aged beef, native hardwood fire, and an obsession with craft since 2018.</p>
+      <div class="ft-hours"><strong>Tue–Fri</strong> Lunch 12–3PM · Dinner 6–10:30PM<br><strong>Saturday</strong> 12PM–11PM<br><strong>Sunday</strong> 12PM–9PM<br><strong>Monday</strong> Closed</div>
+    </div>
+    <div class="ft-col"><h4>Restaurant</h4><a href="#">Our Story</a><a href="#">The Team</a><a href="#">Private Dining</a><a href="#">Gift Vouchers</a></div>
+    <div class="ft-col"><h4>Menu</h4><a href="#">From the Grill</a><a href="#">To Start & Share</a><a href="#">The Cellar</a><a href="#">Weekly Specials</a></div>
+    <div class="ft-col"><h4>Find Us</h4><a href="#">Karen Road, Nairobi</a><a href="tel:+254700000000">+254 700 000 000</a><a href="#">hello@emberandoak.co.ke</a><a href="#">@emberandoak.nbi</a></div>
+  </div>
+  <div class="ft-bot">
+    <span>© 2025 Ember & Oak Ltd · Karen, Nairobi · All rights reserved</span>
+    <a href="#" class="ft-wa">💬 WhatsApp Us</a>
+  </div>
+</footer>
+
+<script>window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('solid',window.scrollY>60)})</script>
+
+<script>
+async function submitEnq(){
+  var n=document.getElementById('fName')?.value.trim()||'',e=document.getElementById('fEmail')?.value.trim()||'',p=document.getElementById('fPhone')?.value.trim()||'';
+  if(!n){showSt('Please enter your name.','#8b0000','#fff0ee');return;}
+  var btn=document.getElementById('fBtn');btn.disabled=true;
+  try{var res=await fetch('/api/enquire',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:n,email:e,phone:p,siteName:'Ember & Oak',whatsappNumber:'254700000000'})
+  });
+  var d=res.ok?await res.json():{success:true,whatsappUrl:'https://wa.me/254700000000'};
+  showSt('✅ Booking received! We\'ll confirm via WhatsApp shortly.','#1a3a1a','#f0f8f0');if(d.whatsappUrl){var wa=document.getElementById('fWa');wa.href=d.whatsappUrl;wa.style.display='block';}
+  btn.textContent='Sent ✓';}
+  catch{btn.disabled=false;showSt('Something went wrong. Please contact us directly.','#8b0000','#fff0ee');}
+}
+function showSt(m,c,bg){var e=document.getElementById('fStatus');e.textContent=m;e.style.cssText='display:block;background:'+bg+';color:'+c+';border:1px solid '+c+';padding:.85rem 1rem;font-size:.82rem;margin-top:.75rem';}
+</script>
+</body>
+</html>
